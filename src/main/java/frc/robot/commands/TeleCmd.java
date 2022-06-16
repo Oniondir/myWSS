@@ -5,6 +5,7 @@ import frc.robot.RobotContainer;
 import frc.robot.commands.gamepad.OI;
 import frc.robot.subsystems.OmniDrive;
 import frc.robot.subsystems.Sensor;
+import frc.robot.subsystems.Arm;
 
 public class TeleCmd extends CommandBase
 {
@@ -14,15 +15,17 @@ public class TeleCmd extends CommandBase
     private final OmniDrive m_omnidrive;
     private final Sensor m_sensor;
     private final OI m_oi;
+    private final Arm m_arm;
 
     /**
      * Constructor
      */
-    public TeleCmd(OmniDrive omnidrive, OI oi)
+    public TeleCmd(OmniDrive omnidrive, OI oi,Arm arm)
     {
         m_omnidrive = RobotContainer.m_omnidrive;
         m_sensor = RobotContainer.m_sensor;
         m_oi = RobotContainer.m_oi;
+        m_arm = RobotContainer.m_arm;
         addRequirements(m_omnidrive); //add the drive subsystem as a requirement 
 		//addRequirements(m_menu); 
     }
@@ -55,6 +58,12 @@ public class TeleCmd extends CommandBase
 
         //Add code here to control servo motor etc.
         m_omnidrive.setMotorOut012(x,y,w);
+        double input_start = -1;
+        double input_end = 1;
+        double output_start = 0;
+        double output_end = 300;
+        double output = output_start+((output_end-output_start)/(input_end-input_start))*(w-input_start);
+        m_arm.setServoAngle(output);
 
         //m_omnidrive.setRobotSpeedXYW(x*0.6, y*0.6, w*Math.PI);
 
@@ -69,6 +78,7 @@ public class TeleCmd extends CommandBase
     public void end(boolean interrupted)
     {
         m_omnidrive.setMotorOut012(0, 0, 0);
+        m_arm.setServoAngle(0);
     }
 
     /**
