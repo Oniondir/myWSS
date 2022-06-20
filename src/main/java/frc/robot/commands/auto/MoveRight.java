@@ -14,9 +14,11 @@ public class MoveRight extends SequentialCommandGroup
     public MoveRight()
     {
         super(
-            new MoveRobot(0, 0.5, 0, 0.0, 0.5),  
-            new MoveRobot(1, -0.5, 0, 0.0, 0.5),
-            new MoveRobot(0, -0.5, 0, 0.0, 0.5)  
+            new MoveRobot(2, -Math.PI/2, 0, 0, Math.PI),  
+            new MoveRobot(1, 0.5, 0, 0, 0.4),
+            new MoveRobot(2, Math.PI, 0, 0.0, Math.PI),
+            new MoveRobot(1, 0.5, 0, 0, 0.4),
+            new MoveRobot(2, -Math.PI/2, 0, 0, Math.PI)
             );
     }
 }

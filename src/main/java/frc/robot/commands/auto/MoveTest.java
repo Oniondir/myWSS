@@ -16,40 +16,38 @@ import frc.robot.commands.auto.MoveRobotSense;
 public class MoveTest extends SequentialCommandGroup
 {
     private enum CommandSelector {
-        ONE, TWO, THREE
+        ONE, TWO
     }
 
     static public CommandSelector selectCmd123() {
-        if (RobotContainer.m_sensor.getIRDistance()<20)
+        if (RobotContainer.m_sensor.getIRDistance()>=50)
             return CommandSelector.ONE;
-        else if (RobotContainer.m_sensor.getIRDistance()<40)
-            return CommandSelector.TWO;
         else
-            return CommandSelector.THREE;
+            return CommandSelector.TWO;
     }
 
-    static public Command selectCmd123_B() {
-        if (RobotContainer.m_sensor.getIRDistance()<20)
-        return new MoveLeft();
-    else if (RobotContainer.m_sensor.getIRDistance()<40)
-        return new MoveBack();
-    else
-        return new MoveRight();
-    }
+    // static public Command selectCmd123_B() {
+    //     if (RobotContainer.m_sensor.getIRDistance()<20)
+    //     return new MoveLeft();
+    // else if (RobotContainer.m_sensor.getIRDistance()<40)
+    //     return new MoveBack();
+    // else
+    //     return new MoveRight();
+    // }
 
     // Use limit switch to select
-    static public boolean selectCmd12_SW() {
-        return RobotContainer.m_sensor.getSwitch();
-    }
-    // use IR to select
-    static public boolean selectCmd12_IR() {
-        return RobotContainer.m_sensor.getIRDistance()>30?true:false;
-    }
+    // static public boolean selectCmd12_SW() {
+    //     return RobotContainer.m_sensor.getSwitch();
+    // }
+    // // use IR to select
+    // static public boolean selectCmd12_IR() {
+    //     return RobotContainer.m_sensor.getIRDistance()>30?true:false;
+    // }
 	public MoveTest()
     {
 
         super(
-            new MoveRobotSense(1, 0.5, 0, 0.0, 0.5, ()->RobotContainer.m_sensor.getIRDistance()<60),
+            new MoveRobotSense(1, 0.5, 0, 0.0, 0.5, ()->RobotContainer.m_sensor.getIRDistance()<50),
 
 
             //selectCmd123_B() // Didn't work
@@ -61,11 +59,11 @@ public class MoveTest extends SequentialCommandGroup
             //Selection command in selectCmd123
             new SelectCommand(
                 Map.ofEntries(
-                    Map.entry(CommandSelector.ONE, new MoveSq()),
-                    Map.entry(CommandSelector.TWO, new MoveSq()),
-                    Map.entry(CommandSelector.THREE, new MoveSq()) ),
+                    Map.entry(CommandSelector.ONE, new MoveBack()),
+                    Map.entry(CommandSelector.TWO, new MoveRight()) 
+                    ),
                 MoveTest::selectCmd123
             ) 
-        );
+        ); 
     }
 }

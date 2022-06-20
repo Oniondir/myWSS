@@ -19,44 +19,39 @@ public class LoopCmd extends CommandBase
     private boolean scheduleFlag;
     private boolean m_endFlag;
     private SequentialCommandGroup cmd;
+    private final end_func fn_ptr;
 
-	public LoopCmd(SequentialCommandGroup cmdToRun)
+    interface end_func
+    {
+        public boolean endCondition();
+    }
+
+	public LoopCmd(SequentialCommandGroup cmdToRun, end_func fn)
     {
         cmd = cmdToRun;
+        fn_ptr = fn;
         //addRequirements(m_drive);
     }
     @Override
     public void initialize()
     {
         state=0;
-        scheduleFlag = true;
+        //scheduleFlag = true;
         m_endFlag = false;
-        cmdEndFlag = false;
+        //cmdEndFlag = false;
         // Globals.debug[0]=Globals.debug[1]=Globals.debug[2]=0;
     }
     @Override
     public void execute()
     {
-        if (scheduleFlag==true) {
-            //launch command group
-            //CommandScheduler.getInstance().schedule(cmd);
-            cmd.schedule(false);
-            scheduleFlag = false;
-            cmdEndFlag = false;
-            state++;
-        }
-        else {
-
-            if (cmdEndFlag == true) {
-                //command group finished, reset flag
-                state++;
-                scheduleFlag = true;
-
-                //End condition for loopCmd
-                //In this example, the loop ends after 3 times
-                if (state==6)
-                    m_endFlag = true;
-
+        if (cmd.isScheduled() == false) {
+            //End condition for loopCmd
+            if (fn_ptr.endCondition()) {
+                m_endFlag = true;
+            }
+            else {
+                //schedule command
+                cmd.schedule(false);
             }
         }
         // Globals.debug[0] = state;

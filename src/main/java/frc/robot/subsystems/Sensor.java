@@ -24,27 +24,26 @@ public class Sensor extends SubsystemBase
     //For servo testing also????
 
     // Sensors
-    private final DigitalInput input10;
+    //private final DigitalInput input10;
     private AnalogInput sharp;
-    private Servo servo;
-
-    private double servoAngle;
-
+    private DigitalInput input;
+    
     // Good for debugging
     // Shuffleboard
     private final ShuffleboardTab tab = Shuffleboard.getTab("Sensors");
     private final NetworkTableEntry D_inputDisp = tab.add("inputDisp", 0).getEntry();
     private final NetworkTableEntry D_irDistance = tab.add("IR Sensor", 0).getEntry();
     private final NetworkTableEntry D_servo = tab.add("Servo",0).getEntry();
+    private final NetworkTableEntry D_switch = tab.add("Switch", false).getEntry();
     //private final NetworkTableEntry D_servoAngle = tab.add("Servo motor",0).getEntry();
 
     //Subsystem for sensors
     //This is just an example.
     public Sensor() {
         
-        input10 = new DigitalInput(10);
+        //input10 = new DigitalInput(10);
         sharp = new AnalogInput(0);
-        servo = new Servo(0);
+        input = new DigitalInput(10);
     }
 
 
@@ -55,7 +54,7 @@ public class Sensor extends SubsystemBase
      * @param degrees degree to set the servo to, range 0° - 300°
      */
     public Boolean getSwitch() {
-        return input10.get();
+        return input.get();
     }
 
 
@@ -90,7 +89,7 @@ public class Sensor extends SubsystemBase
         //Display on shuffleboard
         //These display is good for debugging but may slow system down.
         //Good to remove unnecessary display during competition
-        D_inputDisp.setBoolean(getSwitch());
+        D_switch.setBoolean(getSwitch());
         D_irDistance.setDouble(getIRDistance());
     }
 }

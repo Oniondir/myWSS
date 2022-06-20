@@ -25,6 +25,12 @@ public final class Constants
     public static final int SERVO           = 0;
     public static final int SERVO_C         = 1;
 
+    /*IOs Constants
+    */
+    public static final int DEBUG_PIN = 8;
+    public static final int int_INPUT0 = 9;
+    public static final int int_INPUT1 = 10;
+
     /**
      * Sensors
      */

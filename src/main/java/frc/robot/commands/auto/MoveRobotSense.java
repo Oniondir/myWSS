@@ -1,5 +1,7 @@
 package frc.robot.commands.auto;
 import frc.robot.commands.auto.MoveRobot;
+import edu.wpi.first.wpilibj.AnalogInput;
+import frc.robot.subsystems.Sensor;
 
 
 /**
@@ -10,6 +12,14 @@ import frc.robot.commands.auto.MoveRobot;
 public class MoveRobotSense extends MoveRobot
 {
     private final end_func f_ptr;
+    private AnalogInput sharp;
+    private double distance;
+
+    public double getIRDistance() {
+        distance = ((Math.pow(sharp.getAverageVoltage(), -1.2045)) * 27.726);
+        return distance;
+    }
+
     interface end_func {
         public boolean endCondition();
     }

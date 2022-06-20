@@ -57,7 +57,12 @@ public class TeleCmd extends CommandBase
         //Get other buttons?
 
         //Add code here to control servo motor etc.
-        m_omnidrive.setMotorOut012(x,y,w);
+        double s0,s1,s2;
+        s0 = (-0.5*x)+(Math.cos(Math.toRadians(150))*y)+(0.18*w);
+        s1 = x+0.18*w;
+        s2 = (-0.5*x)+(Math.cos(Math.toRadians(30))*y)+(0.18*w);
+
+        m_omnidrive.setMotorOut012(s0,s1,s2);
         double input_start = -1;
         double input_end = 1;
         double output_start = 0;

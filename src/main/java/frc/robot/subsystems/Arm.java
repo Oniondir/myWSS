@@ -31,6 +31,11 @@ public class Arm extends SubsystemBase
         servo.setAngle(degrees);
     }
 
+    public double getServoAngle()
+    {
+        return servo.getAngle();
+    }
+
     public void periodic()
     {
         //Display on shuffleboard
