@@ -14,7 +14,7 @@ import frc.robot.subsystems.Arm;
  * <p>
  * This class drives a motor 
  */
-public class MoveRobotArm extends CommandBase
+public class MoveServo2 extends CommandBase
 {
     //Grab the subsystem instance from RobotContainer
     private final static Arm m_arm = RobotContainer.m_arm;
@@ -36,7 +36,7 @@ public class MoveRobotArm extends CommandBase
      * @param maxSpeed - max speed of robot
      */
     //This move the robot a certain distance following a trapezoidal speed profile.
-    public MoveRobotArm(double pos, double maxSpeed)
+    public MoveServo2(double pos, double maxSpeed)
     {
         m_constraints = new TrapezoidProfile.Constraints(maxSpeed, maxSpeed);
         tgt_pos = pos;      
@@ -48,7 +48,7 @@ public class MoveRobotArm extends CommandBase
     @Override
     public void initialize()
     {   
-        start_pos = m_arm.getServoAngle();
+        start_pos = m_arm.getServoAngle2();
         dist = tgt_pos - start_pos;
 
         //Negative distance don't seem to work with the library function????
@@ -76,13 +76,13 @@ public class MoveRobotArm extends CommandBase
         //Create a new profile to calculate the next setpoint(speed) for the profile
         var profile = new TrapezoidProfile(m_constraints, m_goal, m_setpoint);
         m_setpoint = profile.calculate(dT);
-        m_arm.setServoAngle( m_setpoint.position*m_dir + start_pos);
+        m_arm.setServoAngle2( m_setpoint.position*m_dir + start_pos);
 
         if ((m_setpoint.position>=m_goal.position) ) {
             //distance reached or end condition met. End the command
             //This class should be modified so that the profile can end on other conditions like
             //sensor value etc.
-            m_arm.setServoAngle( m_setpoint.position*m_dir + start_pos);
+            m_arm.setServoAngle2( m_setpoint.position*m_dir + start_pos);
             m_endFlag = true;
         }
     }

@@ -42,11 +42,16 @@ public class AutoMainCmd extends SequentialCommandGroup
             //new MoveRobotSense(2, -Math.PI/2, 0, 0, 0.4, ()->RobotContainer.m_sensor.getIRDistance()>=50)
 
             //new LoopCmd(new MoveBack(), ()->RobotContainer.m_sensor.getIRDistance()>60)
-            new MoveRobot(1,0.5,0,0,0.4),
+            //
+            //
+            // new MoveRobot(1,0.5,0,0,0.4),
 
-            new LoopCmd(new MoveTest(), ()->RobotContainer.m_sensor.getSwitch() == true),
+            // new LoopCmd(new MoveTest(), ()->RobotContainer.m_sensor.getSwitch() == true),
 
-            new MoveBack()
+            // new MoveBack()
+            //new MoveArm(0.1, 0.1)
+            new MoveServo1(0, 50),
+            new MoveServo2(0, 50)
             
         );
             //new MoveRobot(0, 0.5, 0, 0, 0.4),
